@@ -19,9 +19,9 @@ interface LastMoveLocation {
 
 const Game: React.FC<GameProps> = React.memo(
   ({ size, renderInfo, clock, time }) => {
-    const initialSquares = Array(size * size).fill(
-      Array(size * size).fill(null)
-    );
+    const initialSquares = Array(size * size)
+      .fill(null)
+      .map(() => Array(size * size).fill(null));
 
     const [squares, setSquares] =
       useState<typeof initialSquares>(initialSquares);
@@ -169,11 +169,13 @@ const Game: React.FC<GameProps> = React.memo(
                     const boardIndex = outerIdx * size + innerIdx;
                     return (
                       <GameBoard
-                        key={innerIdx}
+                        key={boardIndex}
                         squares={squares[boardIndex]}
                         winner={localWinners[boardIndex] as any}
                         clickable={isCurrentBoard(boardIndex)}
-                        onClick={() => handleClick(innerIdx, boardIndex)}
+                        onClick={(squareIndex) =>
+                          handleClick(squareIndex, boardIndex)
+                        }
                       />
                     );
                   })}

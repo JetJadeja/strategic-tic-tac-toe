@@ -16,11 +16,10 @@ const GameBoard: React.FC<GameBoardProps> = React.memo(
     const rows = [];
 
     for (let i = 0; i < size; i++) {
-      console.log("HI!", i);
-
       const cols = [];
       for (let j = 0; j < size; j++) {
         const index = i * size + j;
+
         cols.push(
           <SquareButton
             key={index}

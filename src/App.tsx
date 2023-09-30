@@ -9,10 +9,6 @@ const App = (): React.ReactElement => {
 
   return (
     <div className="app">
-      {/* <SettingsForm
-        defaultValues={{ boardSize, clock, time, matchID }}
-        submitCallback={newGame}
-      /> */}
       <br />
       <Game
         key={matchID}
