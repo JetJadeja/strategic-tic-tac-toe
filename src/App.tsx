@@ -1,15 +1,33 @@
-import React from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import React, { useState } from 'react';
+import Game from './components/Game';
 
 const ReactApp = (): React.ReactElement => {
+  const [boardSize, setBoardSize] = useState(3);
+  const [clock, setClock] = useState(false);
+  const [time, setTime] = useState(10);
+  const [matchID, setMatchID] = useState(0);
+
+  const newGame = (size: number, clock: boolean, time: number) => {
+    setBoardSize(size);
+    setClock(clock);
+    setTime(time);
+    setMatchID((prevMatchID) => prevMatchID + 1);
+  };
+
   return (
-    <div className="App">
-      <Switch>
-        {/* Public Routes */}
-        {/* Private Routes */}
-        {/* Fallback redirect to main app homepage! Change the 'to' property after setting up routes. */}
-        <Route path="/" component={() => <Redirect to="/homepage" />} />
-      </Switch>
+    <div className="app">
+      {/* <SettingsForm
+        defaultValues={{ boardSize, clock, time, matchID }}
+        submitCallback={newGame}
+      /> */}
+      <br />
+      <Game
+        key={matchID}
+        size={boardSize}
+        clock={clock}
+        time={time}
+        renderInfo={true}
+      />
     </div>
   );
 };
