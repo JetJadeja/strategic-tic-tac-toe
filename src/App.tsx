@@ -7,13 +7,6 @@ const ReactApp = (): React.ReactElement => {
   const [time, setTime] = useState(10);
   const [matchID, setMatchID] = useState(0);
 
-  const newGame = (size: number, clock: boolean, time: number) => {
-    setBoardSize(size);
-    setClock(clock);
-    setTime(time);
-    setMatchID((prevMatchID) => prevMatchID + 1);
-  };
-
   return (
     <div className="app">
       {/* <SettingsForm
