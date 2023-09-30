@@ -14,13 +14,13 @@ const SquareButton: React.FC<SquareProps> = React.memo(
     const color = value === "X" ? "#fc7341" : "#2db2e2";
     const bgColor =
       winner === "X"
-        ? "#ffccb5"
+        ? "#ff7f50"
         : winner === "O"
-        ? "#dbf5ff"
+        ? "#1e90ff"
         : clickable
-        ? "#e2ffec"
-        : "#f7f9fc";
-    const hoverBgColor = clickable ? "#c7fcd1" : bgColor;
+        ? "#90ee90"
+        : "#f0f8ff";
+    const hoverBgColor = clickable ? "#32cd32" : bgColor;
 
     return (
       <Button
