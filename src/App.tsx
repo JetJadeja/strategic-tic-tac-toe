@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Game from "./components/Game";
 
-function App() {
+const App = (): React.ReactElement => {
+  const [boardSize, setBoardSize] = useState(3);
+  const [clock, setClock] = useState(false);
+  const [time, setTime] = useState(10);
+  const [matchID, setMatchID] = useState(0);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      {/* <SettingsForm
+        defaultValues={{ boardSize, clock, time, matchID }}
+        submitCallback={newGame}
+      /> */}
+      <br />
+      <Game
+        key={matchID}
+        size={boardSize}
+        clock={clock}
+        time={time}
+        renderInfo={true}
+      />
     </div>
   );
-}
+};
 
 export default App;
