@@ -2,7 +2,7 @@ import { Text } from '@chakra-ui/react';
 import React, { useEffect, useRef, useState } from 'react';
 
 // Define an enum for players
-enum Player {
+export enum Player {
   Player1 = 'Player1',
   Player2 = 'Player2',
 }
@@ -14,7 +14,7 @@ interface CountDownProps {
   endTurnCallback: (nextPlayer: Player) => void;
 }
 
-const CountDown: React.FC<CountDownProps> = ({
+const Clock: React.FC<CountDownProps> = ({
   seconds,
   currentPlayer,
   timeOverCallback,
@@ -84,4 +84,4 @@ const CountDown: React.FC<CountDownProps> = ({
   );
 };
 
-export default CountDown;
+export default Clock;
