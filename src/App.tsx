@@ -71,7 +71,7 @@ const App = (): React.ReactElement => {
             bgGradient="linear(to-l, #7928CA, #FF0080)"
             bgClip="text"
           >
-            Ultimate Tic Tac Toe
+            Strategic Tic Tac Toe
           </Heading>
 
           {currentView === "intro" && (
