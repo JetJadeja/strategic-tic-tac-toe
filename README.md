@@ -1,6 +1,6 @@
 # Strategic Tic Tac Toe
 
-[Example Game](./assets/game.png)
+![Example Game](./assets/game.png)
 
 This project, made for my Senior Capstone Course, is an implementation of the classic game of Tic Tac Toe built, but with an additional strategic twist. In this version, you are not limited to playing in a single 3x3 grid, but rather a nine of them, arranged in a 3x3 format.
 
