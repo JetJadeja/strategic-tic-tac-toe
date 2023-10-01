@@ -1,46 +1,43 @@
-# Getting Started with Create React App
+# Strategic Tic Tac Toe
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is an implementation of the classic game of Tic Tac Toe, but with an additional strategic twist. In this version, you are not limited to playing in a single 3x3 grid, but rather a nine of them, arranged in a 3x3 format.
 
-## Available Scripts
+## Basics of the Game
 
-In the project directory, you can run:
+The objective of Stategic Tic Tac Toe is the exact same as the traditional game -- to get three of your symbol in a row, whether that be horizontally, vertically, or diagonally. However, in this version, the game is played on a larger grid which consists of nine individual tic tac toe boards. 
 
-### `yarn start`
+During their turn, players place their symbol (either X or O) into empty spaces on one of the boards. The catch of this game is the fact that the opponent's decision determines the position of your move. For example, if your opponent places their symbol in the top-right corner of any small board, you must play your subsequent move in the top-right board of the large grid.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+You can win an individual small tic tac toe board just like traditional Tic Tac Toe, and the goal is to win the larger 9x9 grid by winning three small boards in a row. 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Setup
 
-### `yarn test`
+To get started with this project, follow the steps below:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository:
+   ```
+   git clone https://github.com/JetJadeja/strategic-tic-tac-toe.git
+   ```
 
-### `yarn build`
+2. Make sure you have Yarn installed on your machine. If not, you can install it by following the instructions at [Yarn Installation](https://classic.yarnpkg.com/en/docs/install).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Navigate to the cloned repository's directory:
+   ```
+   cd strategic-tic-tac-toe
+   ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. Use Yarn to install the project dependencies:
+   ```
+   yarn
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Congratulations! The project is now set up and ready to go.
 
-### `yarn eject`
+## Running the Program
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+To run the Strategic Tic Tac Toe game, execute the following command:
+```
+yarn start
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+This command will start the game and display it at localhost:3000
