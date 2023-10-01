@@ -41,3 +41,7 @@ yarn start
 ```
 
 This command will start the game and display it at localhost:3000
+
+## Credits
+
+My code was inspired by [`ultimate-tic-tac-toe`](https://github.com/Minimuino/ultimate-tic-tac-toe-react/tree/master) by Minimuino. The style of the board was pretty much taken from their index.css file!
