@@ -137,13 +137,7 @@ const App = (): React.ReactElement => {
                 </Button>
               </HStack>
 
-              <Game
-                key={matchID}
-                size={boardSize}
-                clock={clock}
-                time={time}
-                renderInfo={true}
-              />
+              <Game key={matchID} size={boardSize} time={time} />
             </VStack>
           )}
 
