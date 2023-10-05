@@ -4,7 +4,7 @@ import GameBoard from "./GameBoard";
 
 interface GameProps {
   size: number;
-  time: number;
+  time: number | null;
 }
 
 // Define an enum for players
@@ -16,6 +16,7 @@ export enum Player {
 interface TurnIndicatorProps {
   player: "X" | "O";
   isActive: boolean;
+  timeLeft: number | null;
 }
 
 interface LastMoveLocation {
@@ -25,10 +26,25 @@ interface LastMoveLocation {
   outerCol: number | null;
 }
 
-const TurnIndicator: React.FC<TurnIndicatorProps> = ({ player, isActive }) => {
+const TurnIndicator: React.FC<TurnIndicatorProps> = ({
+  player,
+  isActive,
+  timeLeft,
+}) => {
   const color = isActive ? (player === "X" ? "#fc7341" : "#2db2e2") : "#d1d1d1";
   const opacity = isActive ? 1 : 0.5; // 50% opacity for the inactive player
   const boxShadow = isActive ? "0px 0px 15px rgba(0, 0, 0, 0.1)" : "none";
+
+  const formatTime = (seconds: number): string | undefined => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+
+    if (Number.isNaN(mins) || Number.isNaN(secs)) return;
+
+    return `${mins.toString().padStart(2, "0")}:${secs
+      .toString()
+      .padStart(2, "0")}`;
+  };
 
   return (
     <Box
@@ -55,6 +71,11 @@ const TurnIndicator: React.FC<TurnIndicatorProps> = ({ player, isActive }) => {
       <Text fontSize="4xl" color={color} transition="color 0.3s">
         {player}
       </Text>
+      {timeLeft !== null && (
+        <Text marginTop="0.5rem" color={color} transition="color 0.3s">
+          {formatTime(timeLeft)}
+        </Text>
+      )}
     </Box>
   );
 };
@@ -76,15 +97,24 @@ const Game: React.FC<GameProps> = React.memo(({ size, time }) => {
   });
   const [xIsNext, setXIsNext] = useState(true);
   const [winner, setWinner] = useState<string | null>(null);
-  const [currentPlayer, setCurrentPlayer] = useState<Player>(Player.Player1);
 
-  const timeOver = (player: Player) => {
-    if (player === Player.Player1) {
-      setWinner("O");
-    } else {
-      setWinner("X");
-    }
-  };
+  const [player1Time, setPlayer1Time] = useState(time);
+  const [player2Time, setPlayer2Time] = useState(time);
+
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      if (xIsNext) {
+        setPlayer1Time((prev) => (prev ? prev - 1 : null));
+        if (player1Time === 0) setWinner("O");
+      } else {
+        setPlayer2Time((prev) => (prev ? prev - 1 : null));
+        if (player2Time === 0) setWinner("O");
+      }
+    }, 1000);
+
+    // Cleanup the interval when component unmounts or player switches
+    return () => clearInterval(interval);
+  }, [xIsNext]);
 
   const isCurrentBoard = (idx: number) => {
     if (winner) return false;
@@ -98,10 +128,6 @@ const Game: React.FC<GameProps> = React.memo(({ size, time }) => {
     return localWinners[currentBoard]
       ? localWinners[idx] === null
       : idx === currentBoard;
-  };
-
-  const endTurn = (nextPlayer: Player) => {
-    setCurrentPlayer(nextPlayer);
   };
 
   const handleClick = (inner_idx: number, outer_idx: number) => {
@@ -200,7 +226,7 @@ const Game: React.FC<GameProps> = React.memo(({ size, time }) => {
         alignItems="flex-start"
         flexDirection="row"
       >
-        <TurnIndicator player="X" isActive={xIsNext} />
+        <TurnIndicator player="X" isActive={xIsNext} timeLeft={player1Time} />
 
         <Box className="game-grid" mx={5}>
           {Array(size)
@@ -226,7 +252,7 @@ const Game: React.FC<GameProps> = React.memo(({ size, time }) => {
               </Box>
             ))}
         </Box>
-        <TurnIndicator player="O" isActive={!xIsNext} />
+        <TurnIndicator player="O" isActive={!xIsNext} timeLeft={player2Time} />
       </Box>
     </Box>
   );

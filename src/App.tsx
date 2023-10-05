@@ -12,48 +12,32 @@ import {
   ChakraProvider,
 } from "@chakra-ui/react";
 import Game from "./components/Game";
-import { FaPlay, FaBookOpen } from "react-icons/fa"; // Importing icons for added flair
-
-const Instructions = React.memo(({ goBack }: { goBack: () => void }) => {
-  return (
-    <Fade in>
-      <VStack spacing={5}>
-        <Heading as="h2" size="2xl">
-          Instructions
-        </Heading>
-        <Text fontSize="lg">Here are the instructions for the game...</Text>
-        <Button colorScheme="teal" onClick={goBack}>
-          Back
-        </Button>
-      </VStack>
-    </Fade>
-  );
-});
+import Instructions from "./components/Instructions";
+import Setup from "./components/Setup";
+import { FaPlay, FaBookOpen } from "react-icons/fa";
 
 const App = (): React.ReactElement => {
-  const [currentView, setCurrentView] = useState<
-    "intro" | "game" | "instructions"
-  >("intro");
-  const bgColor = useColorModeValue("gray.900", "gray.800");
+  const [currentView, setCurrentView] = useState<string>("intro");
+
   const hoverBg = useColorModeValue("blue.700", "blue.900");
 
-  const [boardSize, setBoardSize] = useState(3);
-  const [clock, setClock] = useState(false);
-  const [time, setTime] = useState(10);
+  const [boardSize] = useState(3);
   const [matchID, setMatchID] = useState(0);
 
-  const [previousView, setPreviousView] = useState<
-    "intro" | "game" | "instructions"
-  >("intro");
+  const [previousView, setPreviousView] = useState<string>("intro");
 
-  const navigateTo = (view: "intro" | "game" | "instructions") => {
+  const navigateTo = (view: string) => {
     setPreviousView(currentView); // Before changing the view, save the current view as previousView
-    setCurrentView(view);
+    setCurrentView(view as any);
   };
 
   const restartGame = () => {
     setMatchID((prev) => prev + 1); // Incrementing matchID to remount the Game component
   };
+
+  const [mode, setMode] = useState<"single" | "twoPlayer">("twoPlayer");
+  const [timerLength, setTimerLength] = useState<number>(10); // default to 10 minutes
+  const [gameMode, setGameMode] = useState<"normal" | "crazy">("normal");
 
   return (
     <ChakraProvider>
@@ -85,7 +69,7 @@ const App = (): React.ReactElement => {
                   transform: "translateY(-2px)",
                   boxShadow: "lg",
                 }}
-                onClick={() => navigateTo("game")}
+                onClick={() => navigateTo("settings")}
               >
                 Play
               </Button>
@@ -103,6 +87,21 @@ const App = (): React.ReactElement => {
               >
                 Instructions
               </Button>
+            </VStack>
+          )}
+
+          {currentView === "settings" && (
+            <VStack spacing={4} w="100%" borderRadius="md" p={4}>
+              <Setup
+                timerLength={timerLength}
+                setTimerLength={setTimerLength}
+                mode={mode}
+                setMode={setMode}
+                gameMode={gameMode}
+                setGameMode={setGameMode}
+                onConfirm={() => navigateTo("game")}
+                onHome={() => navigateTo("intro")}
+              />
             </VStack>
           )}
 
@@ -131,13 +130,20 @@ const App = (): React.ReactElement => {
                   mb={4}
                   variant="outline"
                   colorScheme="teal"
-                  onClick={restartGame}
+                  onClick={() => {
+                    restartGame();
+                    navigateTo("settings");
+                  }}
                 >
                   Restart
                 </Button>
               </HStack>
 
-              <Game key={matchID} size={boardSize} time={time} />
+              <Game
+                key={matchID}
+                size={boardSize}
+                time={timerLength ? timerLength * 60 : null}
+              />
             </VStack>
           )}
 
