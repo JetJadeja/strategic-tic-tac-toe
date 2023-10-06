@@ -143,6 +143,8 @@ const App = (): React.ReactElement => {
                 key={matchID}
                 size={boardSize}
                 time={timerLength ? timerLength * 60 : null}
+                gameMode={gameMode}
+                mode={mode}
               />
             </VStack>
           )}
