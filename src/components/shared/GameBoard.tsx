@@ -1,6 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
-import SquareButton from "./utils/SquareButton";
+import SquareButton from "./SquareButton";
 
 // Define the prop types
 interface GameBoardProps {
