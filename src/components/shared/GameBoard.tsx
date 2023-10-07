@@ -8,10 +8,11 @@ interface GameBoardProps {
   winner?: "X" | "O";
   clickable?: boolean;
   onClick: (index: number) => void;
+  isBattleSquare?: boolean;
 }
 
 const GameBoard: React.FC<GameBoardProps> = React.memo(
-  ({ squares, winner, clickable, onClick }) => {
+  ({ squares, winner, clickable, onClick, isBattleSquare = false }) => {
     const size = 3; // Hardcoding for a 3x3 board
     const rows = [];
 
@@ -27,6 +28,7 @@ const GameBoard: React.FC<GameBoardProps> = React.memo(
             winner={winner}
             clickable={clickable}
             onClick={() => onClick(index)}
+            isBattleSquare={isBattleSquare}
           />
         );
       }

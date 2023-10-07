@@ -1,7 +1,20 @@
-import { Box, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  Button,
+} from "@chakra-ui/react";
 import React, { useState } from "react";
 import GameBoard from "./shared/GameBoard";
 import PlayerStatusPanel from "./shared/PlayerStatusPanel";
+
+import { Icon } from "@chakra-ui/icons";
+import { FaTrophy } from "react-icons/fa";
 
 interface GameProps {
   size: number;
@@ -29,6 +42,8 @@ const Game: React.FC<GameProps> = React.memo(
       .fill(null)
       .map(() => Array(size * size).fill(null));
 
+    const [isWinModalOpen, setIsWinModalOpen] = useState(false);
+
     const [squares, setSquares] =
       useState<typeof initialSquares>(initialSquares);
     const [localWinners, setLocalWinners] = useState<(string | null)[]>(
@@ -49,14 +64,24 @@ const Game: React.FC<GameProps> = React.memo(
     const [player1HasShuffled, setPlayer1HasShuffled] = useState(false);
     const [player2HasShuffled, setPlayer2HasShuffled] = useState(false);
 
+    const [battleSquareWinner, setBattleSquareWinner] = useState<string | null>(
+      null
+    );
+
+    const [battleSquare, setBattleSquare] = useState<number | null>(
+      gameMode === "battle" ? Math.floor(Math.random() * size * size) : null
+    );
+
     React.useEffect(() => {
       const interval = setInterval(() => {
-        if (xIsNext) {
-          setPlayer1Time((prev) => (prev ? prev - 1 : null));
-          if (player1Time === 0) setWinner("O");
-        } else {
-          setPlayer2Time((prev) => (prev ? prev - 1 : null));
-          if (player2Time === 0) setWinner("O");
+        if (winner === null) {
+          if (xIsNext) {
+            setPlayer1Time((prev) => (prev ? prev - 1 : null));
+            if (player1Time === 0) setWinner("O");
+          } else {
+            setPlayer2Time((prev) => (prev ? prev - 1 : null));
+            if (player2Time === 0) setWinner("O");
+          }
         }
       }, 1000);
 
@@ -107,6 +132,11 @@ const Game: React.FC<GameProps> = React.memo(
         newWinnerLine && newSquares[outer_idx][newWinnerLine[0]];
       setLocalWinners(updatedWinners);
 
+      // Check if the clicked square was the battle square and update the battle square winner
+      if (outer_idx === battleSquare && updatedWinners[outer_idx]) {
+        setBattleSquareWinner(updatedWinners[outer_idx]);
+      }
+
       const globalWinnerLine = calculateWinner(updatedWinners, {
         row: lastMove.outerRow,
         col: lastMove.outerCol,
@@ -114,7 +144,8 @@ const Game: React.FC<GameProps> = React.memo(
 
       if (globalWinnerLine) {
         setWinner(updatedWinners[globalWinnerLine[0]]);
-        alert("WINNER");
+        setIsWinModalOpen(true);
+
         setPlayer1HasShuffled(true);
         setPlayer2HasShuffled(true);
       }
@@ -189,59 +220,103 @@ const Game: React.FC<GameProps> = React.memo(
       } else {
         setPlayer2HasShuffled(true);
       }
+
+      setBattleSquare(null);
     };
 
     return (
-      <Box className="game-container">
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="flex-start"
-          flexDirection="row"
-        >
-          <PlayerStatusPanel
-            player="X"
-            isActive={xIsNext}
-            timeLeft={player1Time}
-            gameMode={gameMode}
-            hasShuffled={player1HasShuffled}
-            onShuffle={shuffleBoards}
-          />
+      <>
+        <Box className="game-container">
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="flex-start"
+            flexDirection="row"
+          >
+            <PlayerStatusPanel
+              player="X"
+              isActive={xIsNext && winner === null}
+              timeLeft={player1Time}
+              gameMode={gameMode}
+              hasShuffled={player1HasShuffled}
+              onShuffle={shuffleBoards}
+              battleSquareWinner={battleSquareWinner === "X"}
+            />
 
-          <Box className="game-grid" mx={8}>
-            {Array(size)
-              .fill(0)
-              .map((_, outerIdx) => (
-                <Box key={outerIdx} className="game-row">
-                  {Array(size)
-                    .fill(0)
-                    .map((_, innerIdx) => {
-                      const boardIndex = outerIdx * size + innerIdx;
-                      return (
-                        <GameBoard
-                          key={boardIndex}
-                          squares={squares[boardIndex]}
-                          winner={localWinners[boardIndex] as any}
-                          clickable={isCurrentBoard(boardIndex)}
-                          onClick={(squareIndex) =>
-                            handleClick(squareIndex, boardIndex)
-                          }
-                        />
-                      );
-                    })}
-                </Box>
-              ))}
+            <Box className="game-grid" mx={8}>
+              {Array(size)
+                .fill(0)
+                .map((_, outerIdx) => (
+                  <Box key={outerIdx} className="game-row">
+                    {Array(size)
+                      .fill(0)
+                      .map((_, innerIdx) => {
+                        const boardIndex = outerIdx * size + innerIdx;
+                        console.log(boardIndex, battleSquare);
+                        return (
+                          <GameBoard
+                            key={boardIndex}
+                            squares={squares[boardIndex]}
+                            winner={localWinners[boardIndex] as any}
+                            clickable={isCurrentBoard(boardIndex)}
+                            onClick={(squareIndex) =>
+                              handleClick(squareIndex, boardIndex)
+                            }
+                            isBattleSquare={boardIndex === battleSquare}
+                          />
+                        );
+                      })}
+                  </Box>
+                ))}
+            </Box>
+            <PlayerStatusPanel
+              player="O"
+              isActive={!xIsNext && winner === null}
+              timeLeft={player2Time}
+              gameMode={gameMode}
+              hasShuffled={player2HasShuffled}
+              onShuffle={shuffleBoards}
+              battleSquareWinner={battleSquareWinner === "O"}
+            />
           </Box>
-          <PlayerStatusPanel
-            player="O"
-            isActive={!xIsNext}
-            timeLeft={player2Time}
-            gameMode={gameMode}
-            hasShuffled={player2HasShuffled}
-            onShuffle={shuffleBoards}
-          />
         </Box>
-      </Box>
+        <Modal
+          isOpen={isWinModalOpen}
+          onClose={() => setIsWinModalOpen(false)}
+          motionPreset="slideInBottom"
+        >
+          <ModalOverlay />
+          <ModalContent
+            bg={winner === "O" ? "blue.600" : "orange.400"}
+            color="white"
+          >
+            <ModalHeader fontSize="2xl" fontWeight="bold">
+              <Icon as={FaTrophy} w={6} h={6} mr={2} />
+              Game Over
+            </ModalHeader>
+            <ModalCloseButton
+              color="red.200"
+              _hover={{ bgColor: "red.500", color: "white" }}
+            />
+            <ModalBody textAlign="center">
+              <Text fontSize="3xl" fontWeight="semibold" mb={4}>
+                {winner} Wins!
+              </Text>
+              <Box display="flex" justifyContent="center">
+                <Button
+                  onClick={() => setIsWinModalOpen(false)}
+                  colorScheme="teal"
+                  size="lg"
+                  fontSize="xl"
+                >
+                  Close
+                </Button>
+                {/* Optionally, add another button here to restart the game or navigate somewhere */}
+              </Box>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+      </>
     );
   }
 );

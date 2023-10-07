@@ -7,20 +7,40 @@ interface SquareProps {
   winner?: "X" | "O";
   clickable?: boolean;
   onClick?: () => void;
+  isBattleSquare?: boolean;
 }
 
 const SquareButton: React.FC<SquareProps> = React.memo(
-  ({ value, winner, clickable, onClick }) => {
+  ({ value, winner, clickable, onClick, isBattleSquare = false }) => {
     const color = value === "X" ? "#fc7341" : "#2db2e2";
-    const bgColor =
-      winner === "X"
-        ? "#ff7f50"
-        : winner === "O"
-        ? "#1e90ff"
-        : clickable
-        ? "#90ee90"
-        : "#f0f8ff";
-    const hoverBgColor = clickable ? "#32cd32" : bgColor;
+
+    let bgColor = "#f0f8ff"; // Default
+
+    if (isBattleSquare) {
+      if (!winner) {
+        if (clickable) {
+          bgColor = "#a0ffe6"; // Light teal for clickable battle square
+        } else {
+          bgColor = "#d9b3ff"; // Light purple for unwon battle square
+        }
+      } else if (winner === "X") {
+        bgColor = "#ff99cc"; // Mauve for X's victory on battle square
+      } else if (winner === "O") {
+        bgColor = "#4b45ff"; // Closer-to-blue shade for O's victory on battle square
+      }
+    } else if (winner === "X") {
+      bgColor = "#ff7f50"; // Orange for X's victory
+    } else if (winner === "O") {
+      bgColor = "#1e90ff"; // Blue for O's victory
+    } else if (clickable) {
+      bgColor = "#90ee90"; // Green for other clickable squares
+    }
+
+    const hoverBgColor = isBattleSquare
+      ? "#90c4ff"
+      : clickable
+      ? "#32cd32"
+      : bgColor;
 
     return (
       <Button

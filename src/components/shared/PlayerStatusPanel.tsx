@@ -8,6 +8,7 @@ interface PlayerStatusPanelProps {
   onShuffle: () => void;
   hasShuffled: boolean;
   gameMode: string;
+  battleSquareWinner: boolean;
 }
 
 const PlayerStatusPanel: React.FC<PlayerStatusPanelProps> = ({
@@ -17,6 +18,7 @@ const PlayerStatusPanel: React.FC<PlayerStatusPanelProps> = ({
   onShuffle,
   hasShuffled,
   gameMode,
+  battleSquareWinner,
 }) => {
   const color = isActive ? (player === "X" ? "#fc7341" : "#2db2e2") : "#d1d1d1";
   const opacity = isActive ? 1 : 0.5; // 50% opacity for the inactive player
@@ -64,7 +66,7 @@ const PlayerStatusPanel: React.FC<PlayerStatusPanelProps> = ({
         </Text>
       )}
       {/* ... (existing children) */}
-      {gameMode === "crazy" && (
+      {(gameMode === "crazy" || battleSquareWinner) && (
         <button
           onClick={onShuffle}
           disabled={hasShuffled}
