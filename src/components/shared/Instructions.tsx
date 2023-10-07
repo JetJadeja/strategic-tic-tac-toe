@@ -10,7 +10,12 @@ import {
   ListItem,
   ListIcon,
 } from "@chakra-ui/react";
-import { CheckCircleIcon } from "@chakra-ui/icons";
+import {
+  CheckCircleIcon,
+  RepeatIcon,
+  StarIcon,
+  WarningIcon,
+} from "@chakra-ui/icons";
 
 const Instructions = React.memo(({ goBack }: { goBack: () => void }) => {
   return (
@@ -21,7 +26,7 @@ const Instructions = React.memo(({ goBack }: { goBack: () => void }) => {
         </Heading>
 
         <Heading as="h3" size="lg" mb={2}>
-          Ultimate Tic Tac Toe:
+          <StarIcon boxSize="6" mr={2} /> Ultimate Tic Tac Toe:
         </Heading>
         <List spacing={2} mb={4}>
           <ListItem>
@@ -51,7 +56,7 @@ const Instructions = React.memo(({ goBack }: { goBack: () => void }) => {
         </List>
 
         <Heading as="h3" size="lg" mb={2}>
-          Crazy Mode:
+          <RepeatIcon boxSize="6" mr={2} /> Crazy Mode:
         </Heading>
         <Text fontSize="md" mb={4}>
           This is Ultimate Tic Tac Toe with a twist! Both players get a button
@@ -61,7 +66,7 @@ const Instructions = React.memo(({ goBack }: { goBack: () => void }) => {
         </Text>
 
         <Heading as="h3" size="lg" mb={2}>
-          Battle Squares Mode:
+          <WarningIcon boxSize="6" mr={2} /> Battle Squares Mode:
         </Heading>
         <Text fontSize="md" mb={4}>
           Similar to the standard game, but one square is highlighted in light
