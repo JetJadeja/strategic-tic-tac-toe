@@ -12,7 +12,7 @@ import {
   ChakraProvider,
 } from "@chakra-ui/react";
 import Game from "./components/Game";
-import Instructions from "./components/Instructions";
+import Instructions from "./components/shared/Instructions";
 import Setup from "./components/Setup";
 import { FaPlay, FaBookOpen } from "react-icons/fa";
 
@@ -37,7 +37,7 @@ const App = (): React.ReactElement => {
 
   const [mode, setMode] = useState<"single" | "twoPlayer">("twoPlayer");
   const [timerLength, setTimerLength] = useState<number>(10); // default to 10 minutes
-  const [gameMode, setGameMode] = useState<"normal" | "crazy">("normal");
+  const [gameMode, setGameMode] = useState<string>("normal");
 
   return (
     <ChakraProvider>
