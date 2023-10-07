@@ -8,7 +8,7 @@ const Setup: React.FC<{
   setMode: React.Dispatch<any>;
   timerLength: number | "custom" | "none"; // Add "none" to the type
   setTimerLength: React.Dispatch<any>;
-  gameMode: "normal" | "crazy";
+  gameMode: string;
   setGameMode: React.Dispatch<any>;
 }> = ({
   mode,
@@ -74,7 +74,6 @@ const Setup: React.FC<{
           <Button
             colorScheme={gameMode === "normal" ? "teal" : undefined}
             onClick={() => setGameMode("normal")}
-            disabled={mode === "twoPlayer"}
           >
             Normal
           </Button>
@@ -84,6 +83,13 @@ const Setup: React.FC<{
             disabled={mode === "twoPlayer"}
           >
             Crazy
+          </Button>
+          <Button
+            colorScheme={gameMode === "battle" ? "teal" : undefined}
+            onClick={() => setGameMode("battle")}
+            disabled={mode === "twoPlayer"}
+          >
+            Battle Square
           </Button>
         </HStack>
       </VStack>
