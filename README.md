@@ -12,6 +12,22 @@ During their turn, players place their symbol (either X or O) into empty spaces 
 
 You can win an individual small tic tac toe board just like traditional Tic Tac Toe, and the goal is to win the larger 9x9 grid by winning three small boards in a row.
 
+## Additional Game Modes
+
+### Crazy Mode
+
+In Crazy Mode, a significant modification is introduced to the standard gameplay: players receive the capability to shuffle the entire 9x9 board, but this ability is restricted to a single use per player. Upon activation of the 'shuffle' function, the nine constituent 3x3 boards undergo a randomized rearrangement. Consider a scenario where a player is on the verge of completing a win on a smaller board. Utilizing the shuffle can shift that board's location, thereby modifying the expected sequence of gameplay.
+
+This random reconfiguration introduces a non-linear aspect to the gameplay. Players, who might traditionally employ deterministic strategies spanning multiple moves, are now presented with an element of stochasticity. The introduction of this unpredictable element necessitates an adaptable approach, requiring players to dynamically adjust their strategies. Consequently, the emphasis is not solely on the direct competition with the opponent based on a known board configuration but also involves navigating the challenges presented by potential board rearrangements. The objective remains consistent: achieving a win, but the path to victory becomes less predictable.
+
+### Battle Squares Mode
+
+Battle Squares Mode introduces an additional strategic component to the game's landscape. As players traverse the 9x9 board, a distinct square, identifiable by its light purple hue, becomes evident. This square, termed the "battle square," serves a purpose beyond mere visual distinction. Securing this square confers upon the player a one-time 'shuffle' capability, similar to that in Crazy Mode, allowing them to randomly rearrange the primary 9 squares.
+
+This conferred ability offers both an opportunity and a challenge. The immediate question for players becomes whether to allocate resources and strategic focus towards claiming this square, given its potential game-altering ability. However, this focus must be balanced against the overarching objective of the game, which remains to secure wins on the smaller boards leading to an eventual victory on the larger board.
+
+The inclusion of the battle square introduces an optimization challenge: the player must decide between an immediate, potentially disruptive advantage and longer-term strategic objectives. It presents a dichotomy between securing a tactical advantage that could change the immediate state of play and maintaining a broader strategic focus on the overall game progression.
+
 ## Setup
 
 To get started with this project, follow the steps below:
