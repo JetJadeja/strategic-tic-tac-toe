@@ -76,14 +76,14 @@ const Game: React.FC<GameProps> = React.memo(
       const interval = setInterval(() => {
         if (winner === null) {
           if (xIsNext) {
-            setPlayer1Time((prev) => (prev ? prev - 1 : null));
+            setPlayer1Time((prev) => (prev ? prev - 0.25 : null));
             if (player1Time === 0) setWinner("O");
           } else {
-            setPlayer2Time((prev) => (prev ? prev - 1 : null));
+            setPlayer2Time((prev) => (prev ? prev - 0.25 : null));
             if (player2Time === 0) setWinner("O");
           }
         }
-      }, 1000);
+      }, 250);
 
       // Cleanup the interval when component unmounts or player switches
       return () => clearInterval(interval);

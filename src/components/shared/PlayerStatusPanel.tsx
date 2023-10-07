@@ -62,7 +62,7 @@ const PlayerStatusPanel: React.FC<PlayerStatusPanelProps> = ({
       </Text>
       {timeLeft !== null && (
         <Text marginTop="0.5rem" color={color} transition="color 0.3s">
-          {formatTime(timeLeft)}
+          {formatTime(Math.floor(timeLeft))}
         </Text>
       )}
       {/* ... (existing children) */}
