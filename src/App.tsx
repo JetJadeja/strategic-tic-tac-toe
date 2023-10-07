@@ -43,10 +43,11 @@ const App = (): React.ReactElement => {
     <ChakraProvider>
       <Center
         className="app"
-        h="100vh"
+        minH="100vh" // Use minH instead of h
         bgGradient="linear(to-b, gray.900, gray.700)"
         color="white"
         p={6} // added padding to give a bit of margin
+        overflowY="auto" // added this to make content scrollable when it overflows
       >
         <VStack spacing={8} w="100%" maxW="800px">
           <Heading
@@ -54,6 +55,7 @@ const App = (): React.ReactElement => {
             size="4xl"
             bgGradient="linear(to-l, #7928CA, #FF0080)"
             bgClip="text"
+            padding={5}
           >
             Strategic Tic Tac Toe
           </Heading>
