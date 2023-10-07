@@ -115,8 +115,8 @@ const Game: React.FC<GameProps> = React.memo(
       if (globalWinnerLine) {
         setWinner(updatedWinners[globalWinnerLine[0]]);
         alert("WINNER");
-        setPlayer1HasShuffled(false);
-        setPlayer2HasShuffled(false);
+        setPlayer1HasShuffled(true);
+        setPlayer2HasShuffled(true);
       }
 
       setLastMoveLocation(lastMove);
