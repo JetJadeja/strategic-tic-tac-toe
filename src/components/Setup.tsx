@@ -45,29 +45,31 @@ const Setup: React.FC<{
         </HStack>
         <HStack spacing={4}>
           <Text minWidth="100px">Timer Length:</Text>
-          {["None", "5 mins", "10 mins", "15 mins", "30 mins"].map((time) => (
-            <Button
-              key={time}
-              colorScheme={
-                (timerLength.toString() === "None"
-                  ? "None"
-                  : `${timerLength.toString()} mins`) === time
-                  ? "teal"
-                  : undefined
-              }
-              onClick={() =>
-                setTimerLength(
-                  time === "custom"
-                    ? 0
-                    : time === "None"
+          {["None", "2 mins", "5 mins", "10 mins", "15 mins", "30 mins"].map(
+            (time) => (
+              <Button
+                key={time}
+                colorScheme={
+                  (timerLength.toString() === "None"
                     ? "None"
-                    : parseInt(time)
-                )
-              }
-            >
-              {time}
-            </Button>
-          ))}
+                    : `${timerLength.toString()} mins`) === time
+                    ? "teal"
+                    : undefined
+                }
+                onClick={() =>
+                  setTimerLength(
+                    time === "custom"
+                      ? 0
+                      : time === "None"
+                      ? "None"
+                      : parseInt(time)
+                  )
+                }
+              >
+                {time}
+              </Button>
+            )
+          )}
         </HStack>
         <HStack spacing={4}>
           <Text minWidth="100px">Game Mode:</Text>
